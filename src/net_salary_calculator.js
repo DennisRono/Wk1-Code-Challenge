@@ -1,10 +1,24 @@
 /**
  * Net Salary Calculator By Kibet :)
  *
- * Deduction - NHIF, NSSF, Housing Levy, PAYE
+ * Challenge 3: Net Salary Calculator (Toy Problem)
+ *
+ * Write a program whose major task is to calculate an individual’s Net Salary by getting the inputs of basic salary and benefits.
+ * Calculate the payee (i.e. Tax), NHIF Deductions, NSSF Deductions, gross salary, and net salary.
+ *
+ * NB: Use KRA, NHIF, and NSSF values provided in the link below.
+ *
+ * - https://www.aren.co.ke/payroll/taxrates.htm Links to an external site.
+ *
+ * Links to an external site.-  Links to an external site.Links to an external site.
+ *
+ * - www.kra.go.ke/en/individual/calculate-tax/calculating-tax/paye
+ *
+ * Deductions - NHIF, NSSF, Housing Levy, PAYE
  *
  */
 
+// Function to calculate NHIF deductions based on taxable income
 const nhifDeductions = (taxable_income) => {
   let deduction
   if (taxable_income <= 5999) {
@@ -46,6 +60,7 @@ const nhifDeductions = (taxable_income) => {
   return deduction
 }
 
+// Function to calculate NSSF deductions based on taxable income
 const nssfDeductions = (taxable_income) => {
   let deduction
   if (taxable_income > 18000) {
@@ -56,6 +71,7 @@ const nssfDeductions = (taxable_income) => {
   return deduction
 }
 
+// Function to calculate PAYE deductions based on taxable income
 const payeDeductions = (taxable_income) => {
   let rate_of_deductions
   if (taxable_income <= 24000) {
@@ -72,23 +88,50 @@ const payeDeductions = (taxable_income) => {
   return (taxable_income * rate_of_deductions) / 100
 }
 
-const salaryCalculator = (gross_icome) => {
-  const personal_relief = 2400
-  const taxable_income = gross_icome - personal_relief
-
-  /* NHIF TAX */
-  const nhifDeduction = nhifDeductions(taxable_income)
-
-  /* NSSF TAX */
-  const nssfDeduction = nssfDeductions(taxable_income)
-
-  /* PAYE TAX */
-  const payeDeduction = payeDeductions(taxable_income)
-
-  return (
-    'Your net Salary is Ksh' +
-    (gross_icome - nhifDeduction - nssfDeduction - payeDeduction)
-  )
+// Function to calculate housing levy based on gross income
+const housingDeductions = (gross_income) => {
+  let deduction = gross_income * 0.015
+  return deduction
 }
 
-console.log(salaryCalculator(200000))
+// Main function to calculate net salary
+const salaryCalculator = (gross_income, benefits) => {
+  const personal_relief = 2400 // Personal relief
+  const taxable_income = gross_income + benefits - personal_relief // Calculate taxable income
+
+  // Calculate NHIF deduction
+  const nhifDeduction = nhifDeductions(taxable_income)
+
+  // Calculate NSSF deduction
+  const nssfDeduction = nssfDeductions(taxable_income)
+
+  // Calculate PAYE deduction
+  const payeDeduction = payeDeductions(taxable_income)
+
+  // Calculate housing levy deduction
+  const housingLevyDeduction = housingDeductions(gross_income)
+
+  // Calculate total deductions
+  const allDeductions =
+    nhifDeduction + nssfDeduction + payeDeduction + housingLevyDeduction
+
+  // Calculate net salary
+  const netSalary = gross_income - allDeductions
+
+  // Return the calculated values
+  return {
+    gross_income,
+    personal_relief,
+    net_salary: netSalary,
+    deductions: {
+      nhif_deduction: nhifDeduction,
+      nssf_deduction: nssfDeduction,
+      paye: payeDeduction,
+      housing_levy: housingLevyDeduction,
+      total_deductions: allDeductions,
+    },
+  }
+}
+
+// Print the output
+console.log(salaryCalculator(200000, 20000))
