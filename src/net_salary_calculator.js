@@ -23,35 +23,35 @@ const nhifDeductions = (taxable_income) => {
   let deduction
   if (taxable_income <= 5999) {
     deduction = 150
-  } else if (taxable_income <= 7999) {
+  } else if (taxable_income > 5999 && taxable_income <= 7999) {
     deduction = 300
-  } else if (taxable_income <= 11999) {
+  } else if (taxable_income > 7999 && taxable_income <= 11999) {
     deduction = 400
-  } else if (taxable_income <= 14999) {
+  } else if (taxable_income > 11999 && taxable_income <= 14999) {
     deduction = 500
-  } else if (taxable_income <= 19999) {
+  } else if (taxable_income > 14999 && taxable_income <= 19999) {
     deduction = 600
-  } else if (taxable_income <= 24999) {
+  } else if (taxable_income > 19999 && taxable_income <= 24999) {
     deduction = 750
-  } else if (taxable_income <= 29999) {
+  } else if (taxable_income > 24999 && taxable_income <= 29999) {
     deduction = 850
-  } else if (taxable_income <= 34999) {
+  } else if (taxable_income > 29999 && taxable_income <= 34999) {
     deduction = 900
-  } else if (taxable_income <= 39999) {
+  } else if (taxable_income > 34999 && taxable_income <= 39999) {
     deduction = 950
-  } else if (taxable_income <= 44999) {
+  } else if (taxable_income > 39999 && taxable_income <= 44999) {
     deduction = 1000
-  } else if (taxable_income <= 49999) {
+  } else if (taxable_income > 44999 && taxable_income <= 49999) {
     deduction = 1100
-  } else if (taxable_income <= 59999) {
+  } else if (taxable_income > 49999 && taxable_income <= 59999) {
     deduction = 1200
-  } else if (taxable_income <= 69999) {
+  } else if (taxable_income > 59999 && taxable_income <= 69999) {
     deduction = 1300
-  } else if (taxable_income <= 79999) {
+  } else if (taxable_income > 69999 && taxable_income <= 79999) {
     deduction = 1400
-  } else if (taxable_income <= 89999) {
+  } else if (taxable_income > 79999 && taxable_income <= 89999) {
     deduction = 1500
-  } else if (taxable_income <= 99999) {
+  } else if (taxable_income > 89999 && taxable_income <= 99999) {
     deduction = 1600
   } else {
     deduction = 1700
@@ -76,11 +76,11 @@ const payeDeductions = (taxable_income) => {
   let rate_of_deductions
   if (taxable_income <= 24000) {
     rate_of_deductions = 10.0
-  } else if (taxable_income <= 32333) {
+  } else if (taxable_income > 24000 && taxable_income <= 32333) {
     rate_of_deductions = 25.0
-  } else if (taxable_income <= 500000) {
+  } else if (taxable_income > 32333 && taxable_income <= 500000) {
     rate_of_deductions = 30.0
-  } else if (taxable_income <= 800000) {
+  } else if (taxable_income > 500000 && taxable_income <= 800000) {
     rate_of_deductions = 32.5
   } else {
     rate_of_deductions = 35.0
