@@ -2,6 +2,8 @@
 
 // sample input = [5,6,1,3,4,2]
 
+// iterate over an array and compare values and swapping them until the array is sorted
+
 // function to sort an array from Lowest to the Highest
 const bubbleSort = (arr) => {
   let n = arr.length
