@@ -72,20 +72,26 @@ const nssfDeductions = (taxable_income) => {
 }
 
 // Function to calculate PAYE deductions based on taxable income
-const payeDeductions = (taxable_income) => {
-  let rate_of_deductions
-  if (taxable_income <= 24000) {
-    rate_of_deductions = 10.0
-  } else if (taxable_income > 24000 && taxable_income <= 32333) {
-    rate_of_deductions = 25.0
-  } else if (taxable_income > 32333 && taxable_income <= 500000) {
-    rate_of_deductions = 30.0
-  } else if (taxable_income > 500000 && taxable_income <= 800000) {
-    rate_of_deductions = 32.5
-  } else {
-    rate_of_deductions = 35.0
+const payeDeductions = (taxablePay, relief) => {
+  const taxBands = [
+    { from: 1, to: 24000, rate: 0.1 },
+    { from: 24001, to: 32333, rate: 0.25 },
+    { from: 32334, to: 500000, rate: 0.3 },
+    { from: 500001, to: 800000, rate: 0.325 },
+    { from: 800001, to: Infinity, rate: 0.35 },
+  ]
+
+  let payeBeforeRelief = 0
+
+  for (let band of taxBands) {
+    if (taxablePay > band.from) {
+      let taxableAmountInBand = Math.min(taxablePay, band.to) - band.from + 1
+      payeBeforeRelief += taxableAmountInBand * band.rate
+    }
   }
-  return (taxable_income * rate_of_deductions) / 100
+  let payeDue = payeBeforeRelief - relief
+
+  return Number(payeDue.toFixed(2))
 }
 
 // Function to calculate housing levy based on gross income
@@ -106,7 +112,7 @@ const salaryCalculator = (gross_income, benefits) => {
   const nssfDeduction = nssfDeductions(taxable_income)
 
   // Calculate PAYE deduction
-  const payeDeduction = payeDeductions(taxable_income)
+  const payeDeduction = payeDeductions(taxable_income, personal_relief)
 
   // Calculate housing levy deduction
   const housingLevyDeduction = housingDeductions(gross_income)
