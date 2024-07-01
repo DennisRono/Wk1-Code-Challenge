@@ -127,6 +127,7 @@ const salaryCalculator = (gross_income, benefits) => {
   // Return the calculated values
   return {
     gross_income,
+    benefits,
     personal_relief,
     net_salary: netSalary,
     deductions: {
@@ -140,4 +141,4 @@ const salaryCalculator = (gross_income, benefits) => {
 }
 
 // Print the output
-console.log(salaryCalculator(200000, 20000))
+// console.log(salaryCalculator(200000, 20000))

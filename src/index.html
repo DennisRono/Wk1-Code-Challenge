@@ -3,7 +3,95 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>NET SALARY CALCULATOR</title>
+    <style>
+      .screen {
+        min-height: 100vh;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .form {
+        padding: 10px;
+        border: 1px solid #000;
+        border-radius: 5px;
+        width: 35%;
+        height: min-content;
+        margin: 40px 0;
+      }
+      .submit_btn {
+        padding: 10px;
+        width: 100%;
+        background: #2e5fff;
+        color: #fff;
+        cursor: pointer;
+        outline: none;
+        border: none;
+      }
+      input {
+        padding: 10px;
+        border-radius: 3px;
+        outline: none;
+        border: 1px solid #000;
+        width: calc(100% - 20px);
+        margin-top: 5px;
+      }
+      .flex_item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-right: 20px;
+      }
+    </style>
   </head>
-  <body></body>
+  <body>
+    <div class="screen">
+      <div action="" class="form">
+        <h1 class="">Calculate your Net Salary</h1>
+        <br />
+        <div class="">
+          <label for="Gross Salary">Gross Salary</label>
+          <br />
+          <input type="text" class="" id="gross" />
+        </div>
+        <br />
+        <div class="">
+          <label for="Gross Salary">Benefits</label>
+          <br />
+          <input type="text" class="" id="benefits" />
+        </div>
+        <br />
+        <button type="submit" class="submit_btn">Calculate</button>
+        <div id="results_tab"></div>
+      </div>
+    </div>
+    <script src="./net_salary_calculator.js"></script>
+    <script>
+      const submit_btn = document.querySelector('.submit_btn')
+      submit_btn.addEventListener('click', () => {
+        const benefits = document.querySelector('#benefits').value
+        const gross = document.querySelector('#gross').value
+        const results_tab = document.querySelector('#results_tab')
+        console.log(gross, benefits)
+        const results = salaryCalculator(Number(gross), Number(benefits))
+        console.log(results)
+        if (results) {
+          results_tab.innerHTML = `<div><ul>
+            <li class="flex_item"><strong>Gross Income: </strong><p>${results.gross_income.toLocaleString()}</p></li>
+            <li class="flex_item"><strong>Net Salary: </strong><p>${results.net_salary.toLocaleString()}</p></li>
+            <li class="flex_item"><strong>Personal Relief: </strong><p>${results.personal_relief.toLocaleString()}</p></li>
+            <li class="flex_item"><strong>Benefits: </strong><p>${results.benefits.toLocaleString()}</p></li>
+            <li class="flex_item"><strong>NHIF Deduction: </strong><p>${results.deductions.nhif_deduction.toLocaleString()}</p></li>
+            <li class="flex_item"><strong>NSSF Deduction: </strong><p>${results.deductions.nssf_deduction.toLocaleString()}</p></li>
+            <li class="flex_item"><strong>PAYE: </strong><p>${results.deductions.paye.toLocaleString()}</p></li>
+            <li class="flex_item"><strong>Housing Levy: </strong><p>${results.deductions.housing_levy.toLocaleString()}</p></li>
+            <li class="flex_item"><strong>TOTAL Deductions: </strong><p>${results.deductions.total_deductions.toLocaleString()}</p></li>
+            </ul></div>`
+        } else {
+          results_tab.innerHTML = '<h1>Failed!</h1>'
+        }
+      })
+    </script>
+  </body>
 </html>
